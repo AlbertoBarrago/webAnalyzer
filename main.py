@@ -1,12 +1,10 @@
 import os
+os.environ["HF_HOME"] = "./models/sentiment"
 
 from fastapi.responses import HTMLResponse
 from starlette.staticfiles import StaticFiles
 from starlette.templating import Jinja2Templates
 from starlette.requests import Request
-
-
-os.environ["HF_HOME"] = "./models/sentiment"
 from fastapi import FastAPI, HTTPException
 from app.utils import (
     logger,
