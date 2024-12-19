@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Analyzer</title>
+    <!-- Collegamento al CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script>
+        async function analyzeURL() {
+            const url = document.getElementById('url').value;
+            const responseElement = document.getElementById('response');
+
+            if (!url) {
+                responseElement.textContent = 'Please enter a valid URL.';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/analyze/?url=${encodeURIComponent(url)}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    responseElement.innerHTML = `<strong>Analysis for ${data.url}:</strong><br>
+                        Sentiment: ${data.analysis[0].label}<br>
+                        Score: ${data.analysis[0].score}<br><br>
+                        <strong>Explanation:</strong><br>
+                        The sentiment label indicates the overall tone of the content, with "POSITIVE" suggesting a positive emotional
+                        tone and "NEGATIVE" indicating a negative tone.
+                        The score represents the model's confidence in this analysis (a higher score means more confidence).`;
+                } else {
+                    responseElement.textContent = 'Error analyzing the URL: ' + data.detail;
+                }
+            } catch (error) {
+                responseElement.textContent = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <h1>Web Analyzer</h1>
+
+    <p>
+        This tool analyzes the sentiment of the text content from any website. Simply enter the URL of the page you'd
+        like to analyze, and the system will determine whether the content has a positive or negative sentiment.
+    </p>
+    <p>
+        The sentiment analysis is performed using an AI model, which processes the text to classify the emotional tone
+        of the content. The result will show whether the page is generally positive or negative, and the score will
+        indicate how confident the model is about its prediction.
+    </p>
+
+    <label for="url">Enter URL to analyze:</label>
+    <input type="text" id="url" placeholder="https://www.example.com"/>
+    <button onclick="analyzeURL()">Analyze</button>
+
+    <div id="response"></div>
+</div>
+</body>
+</html>
