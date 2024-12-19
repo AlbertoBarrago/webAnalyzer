@@ -18,7 +18,7 @@ networkx==3.2.1
 numpy==2.2.0
 packaging==24.2
 pi==0.1.2
-pillow==10.2.0
+pillow==10.3.0
 pydantic==2.10.4
 pydantic_core==2.27.2
 PyYAML==6.0.2
@@ -40,3 +40,5 @@ typing_extensions==4.12.2
 urllib3==2.2.3
 uvicorn==0.34.0
 wheel==0.45.1
+diffusers~=0.31.0
+psutil~=6.1.0
